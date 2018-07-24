@@ -1,0 +1,17 @@
+{
+  "name": "sentence-case",
+  "version": "1.0.0",
+  "description": "API for converting arrays of strings to sentence case",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.4.0",
+    "jest": "^23.4.1",
+    "regenerator-runtime": "^0.12.0"
+  }
+}
