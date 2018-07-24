@@ -9,8 +9,10 @@ export const hasSubsequentCapitals = word => {
   })
   return hasCapitals
 }
+
 // takes array of single-character strings ['a', 'b', ')']
-// returns the index of the firs non-alphanum character, or 0
+// returns the index of the first non-alphanum character
+// or 0 if only alphanumeric characters exist
 export const nextNonAlphaNumIndex = chars => {
   let indices = []
   chars.map((char, index) => {
@@ -20,6 +22,7 @@ export const nextNonAlphaNumIndex = chars => {
   })
   return indices[0] || 0
 }
+
 // takes array of characters eg:
 // [ 'G','o','P','r','o','s',')']
 // joins the next word (after the index) based on the first-found special character
@@ -37,6 +40,7 @@ export const sentenceCaseString = str => {
       const shouldCharBeLowered = isAlphaNum(char) && !isAlphaNum(arr[index - 1]) && !hasSubsequentCapitals(currentWord)
 
       // convert any letters after spaces or special characters
+      // also excludes words with subsequent capitals (eg 'GoPro' or 'DSLR')
       if (shouldCharBeLowered) {
         // join current word into a string
         return char.toLowerCase()
