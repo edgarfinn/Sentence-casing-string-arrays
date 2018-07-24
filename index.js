@@ -48,7 +48,7 @@ export const sentenceCaseString = str => {
 }
 
 export const sentenceCaseAllNested = arg => {
-  if (typeof(arg) === 'string') {
+  if (typeof (arg) === 'string') {
     return sentenceCaseString(arg)
   }
   return arg.map(str => sentenceCaseAllNested(str))
