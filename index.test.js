@@ -1,10 +1,32 @@
 import {
+  isAlphaNum,
   sentenceCaseString,
-  sentenceCaseArrayOfStrings,
   hasSubsequentCapitals,
   nextNonAlphaNumIndex,
-  getCurrentWordFromChars
+  getCurrentWordFromChars,
+  sentenceCaseAllNested
 } from './index.js'
+
+import {
+  titleCaseCategories,
+  sentenceCaseCategories
+} from './testCategories.js'
+
+describe('isAlphaNum', () => {
+  it('returns true when passed a letter string', () => {
+    expect(isAlphaNum('A')).toBe(true)
+    expect(isAlphaNum('b')).toBe(true)
+  })
+  it('returns true when passed a number string', () => {
+    expect(isAlphaNum('1')).toBe(true)
+  })
+  it('returns false when passed any non alphanumeric strings', () => {
+    expect(isAlphaNum('[]')).toBe(false)
+    expect(isAlphaNum(' ')).toBe(false)
+    expect(isAlphaNum('<')).toBe(false)
+    expect(isAlphaNum('"')).toBe(false)
+  })
+})
 
 describe('getCurrentWordFromChars', () => {
   const chars = 'All Cameras (Including GoPros)'.split('')
@@ -47,24 +69,30 @@ describe('sentenceCaseString', () => {
   })
 })
 
-describe('sentenceCaseArrayOfStrings', () => {
-  const strings = [
-    'This Is A Title Case String',
-    'Large Venues (>Medium Size)',
-    'this is a lower case string',
-    'this Is A Random case string',
-    'All Cameras (Including GoPros)'
-  ]
+const titledStrings = [
+  'This Is A Title Case String',
+  'Large Venues (>Medium Size)',
+  'this is a lower case string',
+  'this Is A Random case string',
+  'All Cameras (Including GoPros)'
+]
 
-  const expected = [
-    'This is a title case string',
-    'Large venues (>medium size)',
-    'This is a lower case string',
-    'This is a random case string',
-    'All cameras (including GoPros)'
-  ]
+const sentencedStrings = [
+  'This is a title case string',
+  'Large venues (>medium size)',
+  'This is a lower case string',
+  'This is a random case string',
+  'All cameras (including GoPros)'
+]
 
-  it('converts an array of lowercase strings correctly', () => {
-    expect(sentenceCaseArrayOfStrings(strings)).toEqual(expected)
+describe('sentenceCaseAllNestedStrings', () => {
+  it('processes a string appropriately', () => {
+    expect(sentenceCaseAllNested('This Is A Title Case String')).toEqual('This is a title case string')
+  })
+  it('processes arrays of strings appropriately', () => {
+    expect(sentenceCaseAllNested(titledStrings)).toEqual(sentencedStrings)
+  })
+  it('converts all nested strings appropriately', () => {
+    expect(sentenceCaseAllNested(titleCaseCategories)).toEqual(sentenceCaseCategories)
   })
 })

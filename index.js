@@ -1,4 +1,3 @@
-export const isNonAlphaNum = char => /[^a-zA-Z0-9]/.test(char)
 export const isAlphaNum = char => /[a-zA-Z0-9]/.test(char)
 
 export const hasSubsequentCapitals = word => {
@@ -15,14 +14,14 @@ export const hasSubsequentCapitals = word => {
 export const nextNonAlphaNumIndex = chars => {
   let indices = []
   chars.map((char, index) => {
-    if (isNonAlphaNum(char)) {
+    if (!isAlphaNum(char)) {
       indices.push(index)
     }
   })
   return indices[0] || 0
 }
 // takes array of characters eg:
-// [ '(','I','n','c','l','u','d','i','n','g',' ','G','o','P','r','o','s',')'
+// [ 'G','o','P','r','o','s',')']
 // joins the next word (after the index) based on the first-found special character
 export const getCurrentWordFromChars = (chars, index) => {
   const currentWord = chars.slice(index, index + nextNonAlphaNumIndex(chars.slice(index))).join('')
@@ -35,7 +34,7 @@ export const sentenceCaseString = str => {
     if (index > 0) {
       const currentWord = getCurrentWordFromChars(arr, index)
 
-      const shouldCharBeLowered = isAlphaNum(char) && isNonAlphaNum(arr[index - 1]) && !hasSubsequentCapitals(currentWord)
+      const shouldCharBeLowered = isAlphaNum(char) && !isAlphaNum(arr[index - 1]) && !hasSubsequentCapitals(currentWord)
 
       // convert any letters after spaces or special characters
       if (shouldCharBeLowered) {
@@ -48,4 +47,9 @@ export const sentenceCaseString = str => {
   }).join('')
 }
 
-export const sentenceCaseArrayOfStrings = arr => arr.map(str => sentenceCaseString(str))
+export const sentenceCaseAllNested = arg => {
+  if (typeof(arg) === 'string') {
+    return sentenceCaseString(arg)
+  }
+  return arg.map(str => sentenceCaseAllNested(str))
+}
